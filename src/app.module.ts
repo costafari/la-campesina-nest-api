@@ -1,8 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user';
-import { LaCampesinaService } from './la-campesina.service';
-import { UserController } from './controllers/user/user.controller';
+import { ClienteModule } from './cliente/cliente.module';
+import { PreciosModule } from './precios/precios.module';
+import { LotesModule } from './lotes/lotes.module';
+import { ProductosModule } from './productos/productos.module';
+import { ProveedoresModule } from './proveedores/proveedores.module';
+import { TicketsModule } from './tickets/tickets.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { UsuariosRolesModule } from './usuarios-roles/usuarios-roles.module';
+import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,12 +20,23 @@ import { UserController } from './controllers/user/user.controller';
       username: 'root',
       password: '123',
       database: 'la_campesina_db',
-      entities: [User],
-      synchronize: true,
+      autoLoadEntities: true,
+      // Si quieres que sobreescriba tablas ya existentes o cree nuevas, utiliza syncronize = true
+      synchronize: false,
+      logging: true
     }),
-    TypeOrmModule.forFeature([User])
-  ],
-  controllers: [UserController],
-  providers: [LaCampesinaService],
+    ClienteModule,
+    PreciosModule,
+    LotesModule,
+    ProductosModule,
+    ProveedoresModule,
+    TicketsModule,
+    UsuariosModule,
+    UsuariosRolesModule,
+    RolesModule,
+    UsersModule
+  ]
+  // controllers: [],
+  // providers: [],
 })
 export class AppModule {}
